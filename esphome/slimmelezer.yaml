@@ -28,21 +28,6 @@ logger:
 
 # Enable Home Assistant API
 api:
-  services:
-    service: set_dsmr_key
-    variables:
-      private_key: string
-    then:
-      - logger.log:
-          format: Setting private key %s. Set to empty string to disable
-          args: [private_key.c_str()]
-      - globals.set:
-          id: has_key
-          value: !lambda "return private_key.length() == 32;"
-      - lambda: |-
-          if (private_key.length() == 32)
-            private_key.copy(id(stored_decryption_key), 32);
-          id(dsmr_instance).set_decryption_key(private_key);
 
 ota:
 
